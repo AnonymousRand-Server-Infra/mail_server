@@ -17,6 +17,9 @@ services:
       - type: volume
         source: mail_server_anubis_var
         target: /var/anubis/
+    env_file:
+      # for `envsubst`
+      - ./.env
     environment:
       BIND_NETWORK: unix
       BIND: ${MAIL_SERVER_ANUBIS_IN_SCKT:?}

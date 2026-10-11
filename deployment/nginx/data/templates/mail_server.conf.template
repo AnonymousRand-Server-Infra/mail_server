@@ -1,4 +1,5 @@
-# route `mail.memi.ng:443` to the webmail client
+# route `mail.memi.ng:443` to my webmail client
+
 
 # first send requests through anubis
 server {
@@ -18,6 +19,9 @@ server {
         set $anubis_in_loc http://unix:${MAIL_SERVER_ANUBIS_IN_SCKT};
         include conf.d/snippets/anubis.func;
     }
+
+    # for certbot (bypasses anubis etc. and also ensures it works with nginx in a container)
+    include conf.d/snippets/acme_challs.func;
 
     ssl_certificate /etc/letsencrypt/live/$ssl_server_name/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/$ssl_server_name/privkey.pem; # managed by Certbot
