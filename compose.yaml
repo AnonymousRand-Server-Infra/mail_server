@@ -1,6 +1,6 @@
 include:
-  - ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_NGINX:?}/compose.yaml
-  - ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_IOCAINE:?}/compose.yaml
+  - ${PATH_TO_SERVER_ROOT:?}/${PATH_FROM_ROOT_TO_NGINX:?}/compose.yaml
+  - ${PATH_TO_SERVER_ROOT:?}/${PATH_FROM_ROOT_TO_IOCAINE:?}/compose.yaml
   - ./deployment/anubis/compose.yaml
 
 services:
