@@ -9,9 +9,9 @@ services:
     profiles:
       - ${DOCKER_DEFAULT_PROFILE:?}
     image: ghcr.io/docker-mailserver/docker-mailserver:latest
-    # provide the fqdn of your mail server here (your dns mx record should point to this value)
-    hostname: mail.memi.ng
     restart: unless-stopped
+    # provide the fqdn of your mail server here (your dns mx record should point to this value)
+    hostname: ${MAIL_SERVER_SITE_DOMAIN:?}
     # need root to bind to privileged ports
     user: ${DOCKER_ROOT_USER:?}
     ports:
@@ -46,7 +46,7 @@ services:
     #   - NET_ADMIN
     healthcheck:
       test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
-      interval: 1m
+      interval: 30s
       timeout: 5s
       retries: 3
       start_period: 30s
@@ -68,7 +68,7 @@ services:
   #  healthcheck:
   #    # todo: possible to make this listen on a socket??
   #    test: ["CMD", "curl", "-I", "--unix-socket", ${RAINLOOP_SCKT:?}, "http://localhost/"]
-  #    interval: 1m
+  #    interval: 30s
   #    timeout: 5s
   #    retries: 3
   #    start_period: 5s
@@ -97,7 +97,7 @@ services:
     healthcheck:
       #test: ["CMD", "curl", "-I", "--unix-socket", "${TACHYON_SCKT:?}", "http://localhost/"]
       test: ["CMD", "curl", "-I", "http://localhost:${TACHYON_PORT:?}"]
-      interval: 1m
+      interval: 30s
       timeout: 5s
       retries: 3
       start_period: 5s

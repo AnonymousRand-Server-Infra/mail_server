@@ -6,7 +6,7 @@ server {
     listen 443 ssl; # managed by Certbot
     listen [::]:443 ssl;
     # TODO eventually set it up on mail.anonymousrand.xyz too?
-    server_name mail.memi.ng;
+    server_name ${MAIL_SERVER_SITE_DOMAIN};
 
     access_log /var/log/nginx/mail_server_access.log;
     error_log /var/log/nginx/mail_server_error.log;
@@ -34,7 +34,7 @@ server {
 
 server {
     listen unix:${MAIL_SERVER_ANUBIS_OUT_SCKT};
-    server_name mail.memi.ng;
+    server_name ${MAIL_SERVER_SITE_DOMAIN};
 
     location / {
         include conf.d/snippets/general_forwarding_headers.func;
@@ -61,13 +61,9 @@ server {
 server {
     listen 80;
     listen [::]:80;
-    server_name mail.memi.ng;
-
-    if ($host = mail.memi.ng) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
+    server_name ${MAIL_SERVER_SITE_DOMAIN};
 
     client_max_body_size 100M;
 
-    return 404; # managed by Certbot
+    return 301 https://$host$request_uri;
 }
